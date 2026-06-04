@@ -1,0 +1,27 @@
+name: Check for Secret Text
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Search for word "secret"
+        run: |
+          if grep -R -i -n --exclude-dir=.git "secret" .; then
+            echo "Found the word 'secret'. Failing the pipeline."
+            exit 1
+          else
+            echo "No occurrence of 'secret' found."
+          fi
