@@ -1,0 +1,28 @@
+name: Check for Secret Text
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Scan repository
+        run: |
+          if grep -R -i -n \
+            --exclude-dir=.git \
+            --exclude-dir=.github \
+            "secret" .; then
+            echo "Forbidden text found."
+            exit 1
+          else
+            echo "No forbidden text found."
+          fi

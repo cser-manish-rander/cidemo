@@ -1,0 +1,1 @@
+docker run --rm -v "$(pwd):/src" -v "$(pwd)/odc-data:/usr/share/dependency-check/data" owasp/dependency-check --scan /src --format HTML --project "VulnPortal" --out /src/odc-report
