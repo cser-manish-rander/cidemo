@@ -1,0 +1,13 @@
+{
+  "name": "secure-node-template",
+  "version": "1.0.0",
+  "description": "Secure Node.js input handling template demonstrating sanitization and validation.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "escape-html": "^1.0.3",
+    "express": "^4.19.2"
+  }
+}

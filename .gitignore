@@ -1,0 +1,4 @@
+﻿node_modules/
+odc-data/
+odc-report/
+.env
