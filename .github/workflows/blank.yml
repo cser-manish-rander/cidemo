@@ -7,21 +7,22 @@ on:
   pull_request:
     branches:
       - main
-  workflow_dispatch:
 
 jobs:
   scan:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Search for word "secret"
+      - name: Scan repository
         run: |
-          if grep -R -i -n --exclude-dir=.git "secret" .; then
-            echo "Found the word 'secret'. Failing the pipeline."
+          if grep -R -i -n \
+            --exclude-dir=.git \
+            --exclude-dir=.github \
+            "secret" .; then
+            echo "Forbidden text found."
             exit 1
           else
-            echo "No occurrence of 'secret' found."
+            echo "No forbidden text found."
           fi
