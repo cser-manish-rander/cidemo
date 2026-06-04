@@ -1,0 +1,32 @@
+name: GitHub Secrets Demo
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch: # Allows manual triggering from the GitHub Actions tab
+
+jobs:
+  demonstrate-secrets:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository code
+        uses: actions/checkout@v4
+
+      - name: Verify and print secret
+        env:
+          MY_SECRET_TOKEN: ${{ secrets.MY_SECRET_TOKEN }}
+        run: |
+          if [ -z "$MY_SECRET_TOKEN" ]; then
+            echo "❌ ERROR: MY_SECRET_TOKEN is not set in GitHub Secrets!"
+            echo "Please read the README.md to configure it."
+            exit 1
+          fi
+
+          echo "✅ SUCCESS: MY_SECRET_TOKEN is detected!"
+          
+          # GitHub automatically masks secrets in the logs.
+          # Printing it will show '***' instead of the actual secret.
+          echo "GitHub masked value: $MY_SECRET_TOKEN"
+          
+          # We can securely show the character length of the secret to prove it was loaded.
+          echo "The length of the secret is: ${#MY_SECRET_TOKEN} characters."
